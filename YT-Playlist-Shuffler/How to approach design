@@ -1,0 +1,137 @@
+How to get started with a design.
+---------------------------------
+
+There are 2 main questions to ask when coming up with a design:
+	1. What kinds of things needs to be stored/retrieved?
+	2. What is going to be done with that data?
+
+Question 1 will tell us which classes we need to make to model our application's data
+Question 2 will tell us what kind of methods we'll need to create and use the data.
+
+The backbone of a design is answering these 2 questions. Any other portion
+of a design, e.g. UI, classes to make, etc., stem from the answer to those
+2 questions.
+
+The answer to the 2 questions is dictated by the application requirements.
+Let's look at a Restaurant Tip Tracker application with the following requirements:
+
+"
+Create an application that keeps track of all tips at a restaurant for the night.
+It should keep track of order placed, have an audit file, check amount, and
+server name.
+"
+
+======= Question 1: What kinds of things needs to be stored/retrieved? ========
+
+Phase I. Think about the structure on a high/macro level.
+We have a restaurant.
+In a restaurant there are servers.
+In a restaurant there are chefs.
+In a restaurant there is an inventory of food
+In a restaurant there guests.
+In a restaurant there is a menu.
+In a restaurant there are orders for any given day/night.
+
+Phase II. Filter out any information that's not pertaining to the requirements
+We have a restaurant.							// Needed
+In a restaurant there guests.						// Needed
+In a restaurant there are servers.					// Needed
+In a restaurant there are chefs.					// Not needed
+In a restaurant there is an inventory of food			// Possibly needed
+In a restaurant there is a menu.					// Not needed
+In a restaurant there are orders for any given day/night.	// Needed
+
+Phase III. Create classes for the remaining high-level information
+Restaurant class
+Guest class
+Server class
+Order class
+
+Phase IV. Summarize the data for those classes.
+class Restaurant {
+	List<Guest> guests;	// A restaurant has multiple guests
+	List<Server> servers;	// A restaurant has multiple servers
+	List<Order> orders;	// A restaurant has multiple orders
+}
+
+class Guest {
+	String name;		// A guest has a name
+	List<Order> orders;	// A guest may have placed multiple orders
+}
+
+class Server {
+	String name;		// A server has a name
+	List<Order> orders;	// A server may have served multiple orders
+}
+
+class Order {
+	DateTime timeOrdered;	// An order has a date and time it was placed
+	List<Item> orderedItems;// Food and drink items ordered => Item class needed
+	String guestName;		// An order belongs to a guest
+	String serverName;	// An order is served by a server.
+	int tableNumber;		// An order is placed for a specific table
+	int orderNumber		// An order number has a unique identifier
+	BigDecimal cost;		// Cost of food & service (without tip)
+	BigDecimal tip;		// Tip amount
+	int paymentType;		// 0=cash, 1=credit, 2=check, ...
+}
+
+Here we have a general summary for the kinds of classes needed.
+
+
+============ Question 2: What is going to be done with that data? =============
+
+Phase I. State diagrams or UI outline
+
+Diagram any connections between states or classes to outline how they will
+interact with each other. Also indicate the flow the user can navigate to/from.
+Personally I think it's always easiest to start with the opening
+page/screen/state the user will see and go from there.
+
+This is similar to what we've done in class and the diagram you already have :)
+
+Phase II. Think about how the classes from Question 1 are going to be created,
+	    updated, or removed.
+
+when the application starts:
+* A new restaurant will be created
+* The restaurants servers are created.
+* There are no guests.
+* There are no orders.
+
+When the application is running:
+* Guests can be added.
+* Orders can be added.
+* Service for a new day/night can be selected.
+* Total orders by day can be viewed
+* Total orders by guest can be viewed
+* Total orders by server can be viewed
+* Orders can be updated
+
+Phase III. Write method prototypes (summaries)
+
+The specifics are not set in stone, so don't worry if you have to change anything later.
+This doesn't have to be done in code like below. It can be placed in the part of your
+design diagram that represents the class where the method will go.
+
+class Restaurant {
+	void initialize();		// Load servers and any archived data on orders or dates
+	void addGuest(name);		// Add guest &
+	void addOrder(guest, server, ...);
+	void startService(date);	// Create new entry for date
+	Order[] viewOrders(date);	// View orders by date
+	Order[] viewOrders(server);	// View orders by server
+	Order[] viewOrders(guest);	// View orders by guest
+	boolean updateOrder(guest, server, ...);
+}
+
+
+=========== Further Design considerations ===========
+
+After answering these questions you can think about other things like:
+* Which data structures to use? Array, ArrayList, Map, etc.
+* Specific Ui formatting, print statements.
+* How to write specific code within a method.
+
+* Note no specific code was written in the design phase. There are no loops,
+if statements, algorithms, math operations, etc.
