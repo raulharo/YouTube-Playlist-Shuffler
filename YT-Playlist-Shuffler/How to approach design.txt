@@ -3,6 +3,8 @@ How to get started with a design.
 
 There are 2 main questions to ask when coming up with a design:
 	1. What kinds of things needs to be stored/retrieved?
+	--
+
 	2. What is going to be done with that data?
 
 Question 1 will tell us which classes we need to make to model our application's data
@@ -28,13 +30,13 @@ We have a restaurant.
 In a restaurant there are servers.
 In a restaurant there are chefs.
 In a restaurant there is an inventory of food
-In a restaurant there guests.
+In a restaurant there are guests.
 In a restaurant there is a menu.
 In a restaurant there are orders for any given day/night.
 
 Phase II. Filter out any information that's not pertaining to the requirements
 We have a restaurant.							// Needed
-In a restaurant there guests.						// Needed
+In a restaurant there are guests.						// Needed
 In a restaurant there are servers.					// Needed
 In a restaurant there are chefs.					// Not needed
 In a restaurant there is an inventory of food			// Possibly needed
